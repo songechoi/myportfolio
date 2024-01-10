@@ -121,6 +121,7 @@
       font-weight:700;
       font-size:24px;
       text-align:center;
+      text-transform: uppercase;
     }
     .quick-nav{
       display: inline-block;
@@ -221,7 +222,7 @@
       /* box-shadow: 5px 10px 10px rgba(0,0,0,0.3); */
       box-shadow: 5px 15px 15px rgba(0,0,0,0.1), 5px -15px 15px rgba(255,255,255,0.3);
       background: #f0f4f7;
-      transition: 3s linear;
+      transition: 7s linear;
     }
     #home .circle02,#home .circle03{
       left: auto;
@@ -489,12 +490,7 @@
             <li><a href="#portfolio"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#BBBBBB" d="M9,15.5H5c-1.383,0-2.563-0.487-3.538-1.463C0.487,13.063,0,11.883,0,10.5c0-1.383,0.487-2.563,1.462-3.538 S3.617,5.5,5,5.5h4v2H5c-0.833,0-1.542,0.292-2.125,0.875S2,9.667,2,10.5c0,0.834,0.292,1.541,0.875,2.125S4.167,13.5,5,13.5h4V15.5z M6,11.5v-2h8v2H6z M11,15.5v-2h4c0.834,0,1.541-0.291,2.125-0.875S18,11.334,18,10.5c0-0.833-0.291-1.542-0.875-2.125 S15.834,7.5,15,7.5h-4v-2h4c1.383,0,2.563,0.487,3.537,1.462C19.513,7.938,20,9.117,20,10.5c0,1.383-0.487,2.563-1.463,3.537 C17.563,15.013,16.383,15.5,15,15.5H11z"/></svg><span>portfolio</span></a></li>
             <li><a href="#contact"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#BBBBBB" d="M0,18.921v-6.315L8.421,10.5L0,8.395V2.079L20,10.5L0,18.921z"/></svg><span>contact</span></a></li>
           </ul>
-        </nav>        
-        <!-- <ul class="row">
-          <li title="페이스북"><a href=""></a></li>
-          <li title="인스타그램"><a href=""></a></li>
-          <li title="구글"><a href=""></a></li>
-        </ul> -->
+        </nav>
       </div>
     </header>
     <aside class="aside">
@@ -633,10 +629,10 @@
     fnSlider(0);  
     sliderHide();
     AOS.init();
-    fnCircle();
-    let loopBack = setInterval(function(){
-      fnCircle();
-    },3000)
+    // fnCircle();
+    // let loopBack = setInterval(function(){
+    //   fnCircle();
+    // },7000)
 
     setAc($('#home .container'));
     $('#btn-nav').click(function(){
