@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
+  <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
+  <link rel="stylesheet" href="./css/reset.css">
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- jQuery modal -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- bxslider -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+  <title>My Portfolio</title>
+  <style>
+    :root{
+      --main-color:#149ddd;
+      --sub-color01:#dff3fc;
+      --sub-color02:#173b6c;
+      --sub-color02-30:rgba(23, 59, 109, 0.3);
+      --sub-color02-60:rgba(23, 59, 109, 0.6);
+      --sub-color03:#272829;
+      --sub-color04:#a8a9b4;
+      --sub-color05:#ffffff;
+      scroll-behavior:smooth;
+    }
+    .port-slider{
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 100000;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .bx-wrapper{
+      width: 80% !important;
+      max-width: 600px !important;
+      margin: 0;
+      border: none;
+      box-shadow: none !important;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .slider .port-item h4{
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 16px;
+      background: var(--sub-color05);
+    }
+    .slider .port-item p{
+      display: none;
+    }
+    
+    #wrap{
+      overflow:hidden;
+    }    
+    .sec{      
+      padding:50px 0;
+    }
+    .sec .container{
+      padding:0 20px;
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:30px;
+    }
+    .sec-tit{
+      font-weight:700;
+      font-size:32px;
+      color:var(--sub-color02);
+      margin-bottom:15px;
+      text-transform:capitalize;
+      position:relative;
+    }
+    .header{
+      position:fixed;
+      left:0;
+      top:0;
+      right:0;
+      bottom:0;
+      z-index:10000;       
+      background:rgba(0,0,0,0.3);
+      color:var(--sub-color05);      
+      transform:translateX(-100%);
+      transition:0.3s;
+    }
+    .header.active{
+      transform:translateX(0);
+    }
+    .header .container{
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:300px;
+      padding:20px;
+      background:var(--sub-color03);
+    }
+    .header .container::before{
+      content:'내사진';
+      display:block;
+      width:150px;
+      height:150px;
+      margin:0 auto 20px;
+      border-radius:50%;
+      background-image:url('./images/profile-img.png');
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:cover;
+      text-indent:-999999px;
+    }
+    h1{
+      margin-bottom:60px;
+      font-weight:700;
+      font-size:24px;
+      text-align:center;
+    }
+    .quick-nav{
+      display: inline-block;
+      padding:0 20px;
+      font-size:20px;
+    }
+    .quick-nav svg{
+      width: 20px;
+      height: 21px;
+      margin-right:10px;
+      padding-top: 3px;
+    }
+    .header nav li.active svg,
+    .header nav li:hover svg{
+      fill: var(--main-color);
+    }
+    .quick-nav span{
+      text-transform: uppercase;
+    }    
+    .quick-nav li{
+      margin-bottom:20px;
+      color:var(--sub-color04);
+    }    
+    .header nav li.active span,
+    .header nav li:hover span{
+      color: var(--sub-color05);
+      text-decoration: underline;
+    }    
+
+    .aside{
+      position:fixed;
+      top:40px;
+      right:20px;
+      z-index:10000;
+    }
+    .aside button{
+      width:50px;
+      height:50px;
+      border:none;
+      border-radius:50%;
+      background:var(--main-color);
+      font-size:20px;
+      color:var(--sub-color05);
+      cursor:pointer;
+    }
+    .aside button i:first-child{
+      display:inline-block;
+    }
+    .aside button i:last-child{
+      display:none;
+    }
+    .aside button.active i:first-child{
+      display:none;
+    }
+    .aside button.active i:last-child{
+      display:inline-block;
+    }
+   
+    #home{
+      overflow: hidden;
+      height:100vh;
+      background-image:url('./images/hero-bg.jpg');
+      background-repeat:no-repeat;
+      background-position:70% center;      
+      background-size:cover;
+    }
+    #home .container{
+      position: relative;
+      height:100%;
+      grid-template-columns:1fr;
+      align-content:center;
+      gap:20px;
+      text-align:center;
+      opacity:0;
+      transition:opacity 1s 0.3s;
+    }
+    #home .container.active{
+      opacity:1;
+    }
+    #home .sec-tit{
+      margin-bottom:0;
+      color:var(--sub-color03);
+      font-size: 36px;
+      text-transform: uppercase;
+      z-index: 1000;
+    }    
+    #home .sec-tit::after{
+      display:none;
+    }
+
+    #home .circle01,#home .circle02,#home .circle03{
+      position: absolute;
+      left:0;
+      top:0;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      /* box-shadow: 5px 10px 10px rgba(0,0,0,0.3); */
+      box-shadow: 5px 15px 15px rgba(0,0,0,0.1), 5px -15px 15px rgba(255,255,255,0.3);
+      background: #f0f4f7;
+      transition: 3s linear;
+    }
+    #home .circle02,#home .circle03{
+      left: auto;
+      top: auto;
+      right: 0;
+      bottom: 0;
+    }
+    #home .circle03{
+      right: 50%;
+      bottom: -100px;
+      width: 200px;
+      height: 200px;
+    }
+
+
+
+
+ 
+    #about .sec-tit,
+    #about .sec-tit+p,
+    #about .img-box,
+    #about .art{
+      grid-column:1/-1;
+    }
+    #about .sec-tit{
+      margin-bottom: 0;
+    }
+    #about .sec-tit+p{
+      padding-bottom: 50px;
+    }
+
+    #about .img-box{
+      width: 250px;
+      padding-left: 70px;
+    }
+
+    #about .art h3{
+      margin-bottom:20px;
+      font-weight:700;
+      font-size:1.4em;
+      color:var(--sub-color02);      
+    }
+
+    #about .art ul{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:6px;
+      margin-bottom:20px;
+    }
+    #about .art ul li{
+      grid-column:1/-1;
+    }
+    #about .art ul li span{
+      font-weight:700;
+    }
+    
+    #about .art ul li p:last-of-type{
+      padding-bottom: 15px;
+    }
+
+    #contact .container{
+      display: block;
+      position: relative;
+      font-family: 'Myriad Pro';
+    }
+    #contact .phone-email{
+      position: absolute;
+      left: 50%;
+      transform: translateX(-40%);
+    }
+    #contact .phone,#contact .email{
+      display: inline-block;
+      margin-right: 70px;
+    }
+    #contact .phone .img-box,#contact .email .img-box{
+      float: left;
+      margin-right: 10px;
+    }
+    #contact .phone p,#contact .email p{
+      float: left;
+    }
+    #contact .author{
+      padding-top: 70px;
+      text-align: center;
+    }
+
+
+
+
+    @keyframes cursor {
+      0%{
+        background:rgba(255,0,0,1);
+      }
+      100%{
+        background:rgba(255,0,0,0);
+      }
+    }
+
+    #skills .sec-tit,#skills .sec-tit+p,#skills .art{
+      grid-column:1/-1;
+    }
+    #skills .art{
+      padding-top:24px;
+    }
+    #skills .art h3{
+      display:none;
+    }
+    #skills .art ul{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      row-gap:60px;
+    }
+    #skills .art ul li{
+      grid-column:1/-1;
+      height:16px;
+      background:var(--main-color);
+      position:relative;
+    }
+    #skills h4{
+      position:absolute;
+      left:0;
+      top:-24px;
+    }
+    #skills h4+p{
+      position:absolute;
+      right:0;
+      top:-24px;
+    }
+    #skills li .over-box{
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:0;
+      background:var(--sub-color02);
+      transition:0.5s 0.3s;
+    }
+    #skills .art ul{
+        column-gap:40px;
+      }
+      #skills .art ul li:nth-child(1){
+        grid-area:1/1/2/7;
+      }
+      #skills .art ul li:nth-child(2){
+        grid-area:2/1/3/7;
+      }
+      #skills .art ul li:nth-child(3){
+        grid-area:3/1/4/7;
+      }
+      #skills .art ul li:nth-child(4){        
+        grid-area:4/1/4/7;
+      }
+      #skills .art ul li:nth-child(5){
+        grid-area:1/7/2/-1;        
+      }
+      #skills .art ul li:nth-child(6){        
+        grid-area:2/7/3/-1;
+      }
+      #skills .art ul li:nth-child(7){
+        grid-area:3/7/4/-1;
+      }
+      #skills .art ul li:nth-child(8){
+        grid-area:4/7/4/-1;
+      }
+
+    #skills li:nth-child(2) .over-box{
+      transition-delay:0.6s;
+    }
+    #skills li:nth-child(3) .over-box{
+      transition-delay:0.9s;
+    }
+    #skills li:nth-child(4) .over-box{
+      transition-delay:1.2s;
+    }
+    #skills li:nth-child(5) .over-box{
+      transition-delay:1.5s;
+    }
+    #skills li:nth-child(6) .over-box{
+      transition-delay:1.8s;
+    }
+    #portfolio .sec-tit,#portfolio .sec-tit+p,#portfolio .art{
+      grid-column:1/-1;
+    }
+    #portfolio h2{
+      padding-left: 20px;
+    }
+    #portfolio .art01,#portfolio .art02{
+      position: relative;
+    }
+    #portfolio .btn-art01,#portfolio .btn-art02{
+      position: absolute;
+      right: 0;
+      left: 50%;
+      bottom: 80px;
+      transform: translateX(-42%);
+    }
+    #portfolio button{
+      width: 100px;
+      height: 30px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 15px;
+      background: #999999;
+      font-family: 'Myriad Pro';
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+    #portfolio button:first-child{
+      background: #010101;
+      color: #959c9e;
+    }
+    #portfolio .btn-art02{
+      transform: translateX(-5%);
+    }
+
+    #contact .img-box{
+      width: 15px;
+    }
+
+
+    @media (min-width:1200px){
+      .sec{
+        margin-left:300px;
+      }
+      .header{
+        transform:translateX(0);
+        right:auto;
+        width:300px;
+      }      
+      .aside{
+        display:none;
+      }
+      #about .img-box{
+        grid-column:1/5;
+      }
+      #about .art{
+        grid-column:5/-1;
+      }
+      
+      #about .art ul li{
+        grid-column:auto;
+      }
+
+      
+      #portfolio ul{
+        grid-template-columns:repeat(3,1fr);
+        width:100%;
+        max-width:1000px;
+      }      
+
+    }
+  </style>
+</head>
+<body>
+  <section id="wrap">
+    <header class="header" id="header">
+      <div class="container">
+        <!-- ::before -->
+        <h1 title="시작페이지로 이동"><a href="./index.html">songe choi</a></h1>
+        <nav>
+          <ul class="quick-nav">
+            <li class="active"><a href="#home"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#CCCCCC" d="M0.667,21V7L10,0l9.333,7v14h-7v-8.166H7.667V21H0.667z"/></svg><span>home</span></a></li>
+            <li><a href="#about"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"> <path fill="#BBBBBB" d="M6.878,12.375c-0.349,0-0.645-0.121-0.889-0.361c-0.243-0.242-0.364-0.537-0.364-0.887 c0-0.349,0.121-0.645,0.361-0.888c0.242-0.243,0.537-0.364,0.886-0.364s0.645,0.121,0.889,0.361 c0.243,0.242,0.364,0.537,0.364,0.887c0,0.349-0.121,0.645-0.361,0.889C7.522,12.253,7.227,12.375,6.878,12.375z M13.127,12.375 c-0.349,0-0.645-0.121-0.889-0.361c-0.241-0.242-0.363-0.537-0.363-0.887c0-0.349,0.121-0.645,0.361-0.888 c0.242-0.243,0.537-0.364,0.887-0.364c0.349,0,0.645,0.121,0.889,0.361c0.241,0.242,0.363,0.537,0.363,0.887 c0,0.349-0.121,0.645-0.361,0.889C13.771,12.253,13.477,12.375,13.127,12.375z M10.012,18.625c2.265,0,4.183-0.79,5.755-2.371 c1.572-1.579,2.358-3.496,2.358-5.748c0-0.403-0.044-0.861-0.129-1.373c-0.088-0.512-0.201-0.959-0.34-1.341 c-0.363,0.086-0.694,0.143-0.988,0.169C16.372,7.987,16.024,8,15.625,8c-1.492,0-2.902-0.291-4.23-0.872 c-1.328-0.582-2.515-1.42-3.556-2.514C7.196,5.969,6.384,7.089,5.403,7.974c-0.98,0.886-2.139,1.554-3.477,2.006 c-0.017,0.069-0.03,0.156-0.039,0.26c-0.008,0.104-0.013,0.191-0.013,0.261c0,2.257,0.79,4.175,2.37,5.754 C5.825,17.835,7.747,18.625,10.012,18.625z M10,20.5c-1.378,0-2.673-0.262-3.885-0.781c-1.212-0.52-2.274-1.238-3.186-2.148 s-1.628-1.975-2.148-3.188C0.261,13.166,0,11.869,0,10.488s0.261-2.679,0.781-3.895S2.019,4.319,2.93,3.417 c0.911-0.903,1.975-1.615,3.189-2.136C7.333,0.761,8.631,0.5,10.012,0.5s2.679,0.263,3.895,0.787 c1.216,0.525,2.273,1.238,3.172,2.138c0.899,0.9,1.611,1.958,2.136,3.175C19.737,7.817,20,9.117,20,10.5 c0,1.378-0.262,2.674-0.781,3.885c-0.52,1.213-1.232,2.275-2.137,3.186c-0.901,0.91-1.963,1.629-3.18,2.148S11.385,20.5,10,20.5z"/></svg><span>about</span></a></li>
+            <li><a href="#skills"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#BBBBBB" d="M2.143,20.5c-0.595,0-1.102-0.209-1.518-0.625S0,18.951,0,18.357V2.643c0-0.595,0.208-1.102,0.625-1.518 S1.548,0.5,2.143,0.5h15.714c0.594,0,1.102,0.208,1.518,0.625S20,2.048,20,2.643v15.714c0,0.594-0.209,1.102-0.625,1.518 S18.451,20.5,17.857,20.5H2.143z"/><polygon fill="#272829" points="7.143,14.071 8.661,12.554 6.607,10.5 8.661,8.446 7.143,6.929 3.571,10.5 "/><polygon fill="#272829" points="12.857,14.071 16.429,10.5 12.857,6.929 11.34,8.446 13.393,10.5 11.34,12.554 "/></svg><span>skills</span></a></li>
+            <li><a href="#portfolio"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#BBBBBB" d="M9,15.5H5c-1.383,0-2.563-0.487-3.538-1.463C0.487,13.063,0,11.883,0,10.5c0-1.383,0.487-2.563,1.462-3.538 S3.617,5.5,5,5.5h4v2H5c-0.833,0-1.542,0.292-2.125,0.875S2,9.667,2,10.5c0,0.834,0.292,1.541,0.875,2.125S4.167,13.5,5,13.5h4V15.5z M6,11.5v-2h8v2H6z M11,15.5v-2h4c0.834,0,1.541-0.291,2.125-0.875S18,11.334,18,10.5c0-0.833-0.291-1.542-0.875-2.125 S15.834,7.5,15,7.5h-4v-2h4c1.383,0,2.563,0.487,3.537,1.462C19.513,7.938,20,9.117,20,10.5c0,1.383-0.487,2.563-1.463,3.537 C17.563,15.013,16.383,15.5,15,15.5H11z"/></svg><span>portfolio</span></a></li>
+            <li><a href="#contact"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#BBBBBB" d="M0,18.921v-6.315L8.421,10.5L0,8.395V2.079L20,10.5L0,18.921z"/></svg><span>contact</span></a></li>
+          </ul>
+        </nav>        
+        <!-- <ul class="row">
+          <li title="페이스북"><a href=""></a></li>
+          <li title="인스타그램"><a href=""></a></li>
+          <li title="구글"><a href=""></a></li>
+        </ul> -->
+      </div>
+    </header>
+    <aside class="aside">
+      <button class="btn-nav" id="btn-nav"><i class="fa-solid fa-bars"></i><i class="fa-solid fa-xmark"></i></button>
+    </aside>
+    <section class="sec sec01" id="home">
+      <div class="container">
+        <h2 class="sec-tit">portfolio</h2>
+        <!-- <div class="circle-wrapper"> -->
+          <div class="circle01"></div>
+          <div class="circle02"></div>
+          <div class="circle03"></div>
+        <!-- </div> -->
+      </div>
+    </section>
+    <section class="sec sec02" id="about">
+      <div class="container">
+        <h2 class="sec-tit">I am</h2>
+        <p><span id="im">UI/UX Designer & Web Developer.</span></p>
+        <div data-aos="fade-right" id="fade-right" class="img-box"><img src="./images/profile-img.png" alt="나의 사진"></div>
+        <article data-aos="fade-left" id="fade-left" class="art">
+          <h3>Education</h3>
+          <ul>
+            <li>
+              <span>웹표준 반응형 웹디자인&웹퍼블리셔 양성과정 수료(750시간)</span>
+              <p>인천IT직업능력개발학원</p>
+              <p>2023.08~2024.01</p>
+            </li>
+            <li>
+              <span>응용SW활용 빅데이터분석 전문가 양성과정 수료(1000시간)</span>
+              <p>한국소프트웨어인재개발원</p>
+              <p>2018.06~2018.12</p>
+            </li>
+            <li>
+              <span>한서대학교 시각디자인학과 졸업</span>
+              <p>2008.03~2012.02</p>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <section class="sec sec03" id="skills">
+      <div class="container">
+        <h2 class="sec-tit">skills</h2>               
+        <article class="art">
+          <h3>스킬 성취율</h3>
+          <ul>
+            <li>
+              <h4>HTML5</h4>
+              <p>100%</p>
+            </li>
+            <li>
+              <h4>CSS3</h4>
+              <p>100%</p>
+            </li>
+            <li>
+              <h4>javaScript</h4>
+              <p>70%</p>
+            </li>
+            <li>
+              <h4>jQuery</h4>
+              <p>80%</p>
+            </li>
+            <li>
+              <h4>Figma</h4>
+              <p>95%</p>
+            </li>
+            <li>
+              <h4>PhotoShop</h4>
+              <p>100%</p>
+            </li>
+            <li>
+              <h4>Illustrator</h4>
+              <p>100%</p>
+            </li>
+            <li>
+              <h4>GitHub</h4>
+              <p>95%</p>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <section class="sec sec04" id="portfolio">
+      <div class="full-container">
+        <h2 class="sec-tit">portfolio</h2>  
+        <article class="art art01">
+          <div class="img-box"><img src="./images/project01.jpg" alt="project01"></div>
+          <div class="btn-art01">
+            <button type="button" class="btn01"><a href="https://github.com/songechoi/songechoi.github.io/" target="_blank">github</a></button>
+            <button type="button" class="btn02">user interface</button>
+            <button type="button" class="btn03">ux design</button>
+            <button type="button" class="btn04">banner design</button>
+          </div>
+        </article>
+        <article class="art art02">
+          <div class="img-box"><img src="./images/project02.jpg" alt="project02"></div>
+          <div class="btn-art02">
+            <button type="button" class="btn01"><a href="https://github.com/songechoi/megabox/" target="_blank">github</a></button>
+          </div>
+        </article>
+      </div>
+    </section>
+    <footer class="sec sec05" id="contact">
+      <div class="container">
+        <h2 class="sec-tit">contact</h2>
+        <div class="phone-email">
+          <div class="phone clearfix">
+            <div class="img-box"><img src="./images/ico-phone.png" alt="phone"></div>
+            <p>010.5799.0943</p>
+          </div>
+          <div class="email clearfix">
+            <div class="img-box"><img src="./images/ico-mail.png" alt="mail"></div>
+            <p>choi89love@gmail.com</p>
+          </div>
+        </div>
+        <div class="author">
+          <p>© 2024 PORTFOLIO OF AMANDA CHOI</p>
+        </div>
+      </div>
+    </footer>
+  </section>
+  <button id="btn-close-slider">닫기</button>
+
+  <script src="./js/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+  <script>   
+    let clickIndex = 0;
+    const arrayImg = $('#portfolio li').clone();
+    $('body').prepend('<section class="port-slider"></section>');
+    $('.port-slider').prepend('<section class="slider"></section>');
+    $('.slider').prepend(arrayImg);
+    
+    fnSlider(0);  
+    sliderHide();
+    AOS.init();
+    fnCircle();
+    let loopBack = setInterval(function(){
+      fnCircle();
+    },3000)
+
+    setAc($('#home .container'));
+    $('#btn-nav').click(function(){
+      tglAc($('#header'));
+      tglAc($('#btn-nav'));
+      if($('#header').hasClass('active')){
+        nonScr($('#wrap'));
+      }else{
+        scr($('#wrap'));
+      }
+    })
+    $('nav li').click(function(){
+      resAc($('nav li'));
+      setAc($(this));
+      resAc($('#header'));
+      resAc($('#btn-nav'));
+      scr($('#wrap'));
+    })
+    $(window).scroll(function(){
+      let skillsArtY = $('#skills .art').offset().top;
+      let skillsArtHeight = $('#skills .art').height();
+      let winHeight = $(window).height();
+      let scrTop = $(window).scrollTop();
+      let result = skillsArtY - winHeight - scrTop;
+      if(result + skillsArtHeight < 0){
+        overBox(1);
+      }else{
+        overBox(0);
+      }
+    })
+    $('#portfolio h3 span').click(function(){
+      $('#portfolio h3 span').not($(this)).css({
+        color:'#000',
+      })
+      $(this).css({
+        color:'var(--main-color)',
+      })
+
+      let thisFlag = $(this).attr('data-flag');
+      let targetItems = $('#portfolio li');
+      tmp(thisFlag,targetItems);
+    })
+    $('#btn-close-slider').click(function(){
+      sliderHide();
+      $(this).hide();
+    })
+    
+    let elIm = document.querySelector('#im');
+    let imTxt = elIm.innerText;
+    elIm.innerText='';
+    let idx = 0;
+    setInterval(function(){
+      if(idx<=imTxt.length-1){
+        if(imTxt[idx]==','){
+          elIm.innerText = '';
+        }else{
+          elIm.innerText = elIm.innerText + imTxt[idx];
+        }
+        idx++;
+      }else{
+        idx = 0;
+        elIm.innerText = '';        
+      }
+    },500);
+    $('#skills li').append('<div class="over-box"></div>');
+
+    // set Active
+    function setAc(el){
+      el.addClass('active');
+    }    
+    // reset Active
+    function resAc(el){
+      el.removeClass('active');
+    }
+    // toggle Active
+    function tglAc(el){
+      el.toggleClass('active');
+    }
+    // non scroll
+    function nonScr(el){
+      el.css({
+        height:'100vh',
+        overflow:'hidden',        
+      })
+    }
+    // scroll
+    function scr(el){
+      el.css({
+        height:'auto',
+        overflow:'auto',        
+      })
+    }  
+    // overbox
+    function overBox(p1){
+      for(let idx=0;idx<=$('.over-box').length-1;idx++){
+        let result = $('.over-box').eq(idx).prev().text();
+        let time = 0
+        if(p1==0){
+          result=p1;
+        }
+        $('.over-box').eq(idx).css({
+          width:result,
+        })
+      }
+    }  
+    // fnGridHeight
+    function fnGridHeight(){
+      const items = $('#portfolio .img-box');
+      let itemsHeight = 0;
+      for(let idx=0 ; idx<=items.length-1 ; idx++){
+        itemsHeight += items.eq(idx).height();
+      }    
+      let gap = $('#portfolio ul').css('gap');    
+      gap = gap.slice(0,gap.indexOf('px'));
+      gap *= (items.length - 1 );
+      $('#portfolio ul').css({
+        height:`${itemsHeight + gap}px`,
+      })
+    }    
+    function fnport(all,showElement){
+      all.not(showElement).css({
+        display:'none',
+      }).animate({        
+        opacity:'0',        
+      },0);
+      showElement.css({
+        display:'block',
+      }).animate({        
+        opacity:'1',        
+      },1000);
+    }
+    function tmp(tf,ti){
+      if(tf=='*'){
+        fnport(ti,ti);
+      }else if(tf=='1'){
+        fnport(ti,$('.port-design'));
+      }else if(tf=='2'){
+        fnport(ti,$('.port-pub'));
+      }else if(tf=='3'){
+        fnport(ti,$('.port-banner'));
+      }
+    }  
+    function sliderShow(){
+      $(wrap).hide(); 
+      $('.port-slider').show();
+    }
+    function sliderHide(){
+      $(wrap).show();
+      $('.port-slider').hide();      
+    }
+    function fnSlider(p){
+      $(".slider").bxSlider({
+        pager:false,
+        startSlide:2,
+      });
+    }
+
+    function fnCircle(){
+      let leftValue01 = Math.random() * 100 - 10;
+      let topValue01 = Math.random() * 100 - 10;
+      let leftValue02 = Math.random() * 100 - 10;
+      let topValue02 = Math.random() * 100 - 10;
+      let leftValue03 = Math.random() * 100 - 10;
+      let topValue03 = Math.random() * 100 - 10;
+      let circle01 = document.querySelector('.circle01');
+      let circle02 = document.querySelector('.circle02');
+      let circle03 = document.querySelector('.circle03');
+      circle01.style.left=`${leftValue01}%`;
+      circle01.style.top=`${topValue01}%`;
+      circle02.style.left=`${leftValue02}%`;
+      circle02.style.top=`${topValue02}%`;
+      circle03.style.left=`${leftValue03}%`;
+      circle03.style.top=`${topValue03}%`;
+    }
+  </script>
+</body>
+</html>
