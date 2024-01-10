@@ -108,7 +108,7 @@
       display:block;
       width:150px;
       height:150px;
-      margin:0 auto 20px;
+      margin:30px auto 20px;
       border-radius:50%;
       background-image:url('./images/profile-img.png');
       background-repeat:no-repeat;
@@ -121,7 +121,7 @@
       font-weight:700;
       font-size:24px;
       text-align:center;
-      text-transform: uppercase;
+      text-transform: capitalize;
     }
     .quick-nav{
       display: inline-block;
@@ -149,7 +149,19 @@
     .header nav li:hover span{
       color: var(--sub-color05);
       text-decoration: underline;
+    }
+    .header .row{
+      display: flex;
+      position: absolute;
+      left: 50%;
+      bottom: 50px;
+      transform: translateX(-50%);
+      opacity: 0.8;
     }    
+    .header .row li{
+      margin-right: 16px;
+    }
+
 
     .aside{
       position:fixed;
@@ -210,7 +222,7 @@
     }    
     #home .sec-tit::after{
       display:none;
-    }
+    }    
 
     #home .circle01,#home .circle02,#home .circle03{
       position: absolute;
@@ -219,10 +231,10 @@
       width: 450px;
       height: 450px;
       border-radius: 50%;
-      /* box-shadow: 5px 10px 10px rgba(0,0,0,0.3); */
       box-shadow: 5px 15px 15px rgba(0,0,0,0.1), 5px -15px 15px rgba(255,255,255,0.3);
       background: #f0f4f7;
-      transition: 7s linear;
+      /* animation: circle01 7s linear infinite; */
+      transition: 9s linear;
     }
     #home .circle02,#home .circle03{
       left: auto;
@@ -236,10 +248,32 @@
       width: 200px;
       height: 200px;
     }
-
-
-
-
+    .move-mouse {
+      position: relative;
+      animation: moving 1.5s linear infinite;
+    }
+    .move-mouse::before,.move-mouse::after{
+      box-sizing:border-box;
+      content:'';
+      display:block;
+      position:absolute;
+      left:50%;
+      top:0;
+      transform:translateX(-50%);
+    }
+    .move-mouse::before{
+      width:18px;
+      height:26px;
+      border:2px solid #272829;
+      border-radius:9px;
+    }
+    .move-mouse::after{
+      top:5px;
+      width:2px;
+      height:7px;
+      border:1px solid #272829;
+      border-radius:1px;
+    }
  
     #about .sec-tit,
     #about .sec-tit+p,
@@ -252,20 +286,27 @@
     }
     #about .sec-tit+p{
       padding-bottom: 50px;
+      transform: translateY(-15px);
     }
-
+    #about p::after{
+      content:'';
+      display:inline-block;
+      width:2px;
+      height:100%;
+      background:rgba(0,0,0,1);
+      animation:cursor 0.5s linear infinite;
+    }
     #about .img-box{
+      padding-top: 60px;
       width: 250px;
       padding-left: 70px;
     }
-
     #about .art h3{
       margin-bottom:20px;
       font-weight:700;
       font-size:1.4em;
       color:var(--sub-color02);      
     }
-
     #about .art ul{
       display:grid;
       grid-template-columns:1fr;
@@ -277,10 +318,17 @@
     }
     #about .art ul li span{
       font-weight:700;
+    }    
+    #about .art ul li span+p{
+      padding: 7px 0 4px;
+    }
+    #about .art ul li p{
+      font-size: 14px;
+      color: #333333;
     }
     
     #about .art ul li p:last-of-type{
-      padding-bottom: 15px;
+      padding-bottom: 19px;
     }
 
     #contact .container{
@@ -314,10 +362,10 @@
 
     @keyframes cursor {
       0%{
-        background:rgba(255,0,0,1);
+        background:rgba(0,0,0,1);
       }
       100%{
-        background:rgba(255,0,0,0);
+        background:rgba(0,0,0,0);
       }
     }
 
@@ -361,33 +409,36 @@
       transition:0.5s 0.3s;
     }
     #skills .art ul{
-        column-gap:40px;
-      }
-      #skills .art ul li:nth-child(1){
-        grid-area:1/1/2/7;
-      }
-      #skills .art ul li:nth-child(2){
-        grid-area:2/1/3/7;
-      }
-      #skills .art ul li:nth-child(3){
-        grid-area:3/1/4/7;
-      }
-      #skills .art ul li:nth-child(4){        
-        grid-area:4/1/4/7;
-      }
-      #skills .art ul li:nth-child(5){
-        grid-area:1/7/2/-1;        
-      }
-      #skills .art ul li:nth-child(6){        
-        grid-area:2/7/3/-1;
-      }
-      #skills .art ul li:nth-child(7){
-        grid-area:3/7/4/-1;
-      }
-      #skills .art ul li:nth-child(8){
-        grid-area:4/7/4/-1;
-      }
+      column-gap:40px;
+    }
+    #skills .art ul li:nth-child(1){
+      grid-area:1/1/2/7;
+    }
+    #skills .art ul li:nth-child(2){
+      grid-area:2/1/3/7;
+    }
+    #skills .art ul li:nth-child(3){
+      grid-area:3/1/4/7;
+    }
+    #skills .art ul li:nth-child(4){        
+      grid-area:4/1/4/7;
+    }
+    #skills .art ul li:nth-child(5){
+      grid-area:1/7/2/-1;        
+    }
+    #skills .art ul li:nth-child(6){        
+      grid-area:2/7/3/-1;
+    }
+    #skills .art ul li:nth-child(7){
+      grid-area:3/7/4/-1;
+    }
+    #skills .art ul li:nth-child(8){
+      grid-area:4/7/4/-1;
+    }
 
+    #skills li:nth-child(1) .over-box{
+    transition-delay:0.3s;
+    }
     #skills li:nth-child(2) .over-box{
       transition-delay:0.6s;
     }
@@ -402,6 +453,12 @@
     }
     #skills li:nth-child(6) .over-box{
       transition-delay:1.8s;
+    }
+    #skills li:nth-child(7) .over-box{
+      transition-delay:2.1s;
+    }
+    #skills li:nth-child(8) .over-box{
+      transition-delay:2.4s;
     }
     #portfolio .sec-tit,#portfolio .sec-tit+p,#portfolio .art{
       grid-column:1/-1;
@@ -471,8 +528,25 @@
         grid-template-columns:repeat(3,1fr);
         width:100%;
         max-width:1000px;
-      }      
+      }
+    }
 
+    @keyframes moving {
+      0%{
+        transform:translateY(0);
+      }
+      15%{
+        transform:translateY(0);
+      }
+      50%{
+        transform:translateY(-10px);
+      }
+      85%{
+        transform:translateY(0);
+      }
+      100%{
+        transform:translateY(0);
+      }
     }
   </style>
 </head>
@@ -481,7 +555,7 @@
     <header class="header" id="header">
       <div class="container">
         <!-- ::before -->
-        <h1 title="시작페이지로 이동"><a href="./index.html">songe choi</a></h1>
+        <h1 title="시작페이지로 이동"><a href="./index.html">amanda choi</a></h1>
         <nav>
           <ul class="quick-nav">
             <li class="active"><a href="#home"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#CCCCCC" d="M0.667,21V7L10,0l9.333,7v14h-7v-8.166H7.667V21H0.667z"/></svg><span>home</span></a></li>
@@ -491,6 +565,11 @@
             <li><a href="#contact"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#BBBBBB" d="M0,18.921v-6.315L8.421,10.5L0,8.395V2.079L20,10.5L0,18.921z"/></svg><span>contact</span></a></li>
           </ul>
         </nav>
+        <ul class="row">
+          <li title="페이스북"><a href="#"><img src="./images/ico-facebook.png" alt="facebook"></a></li>
+          <li title="인스타그램"><a href="#"><img src="./images/ico-instagram.png" alt="instagram"></a></li>
+          <li title="구글"><a href="#"><img src="./images/ico-google.png" alt="google"></a></li>
+        </ul>
       </div>
     </header>
     <aside class="aside">
@@ -504,12 +583,13 @@
           <div class="circle02"></div>
           <div class="circle03"></div>
         <!-- </div> -->
+        <div class="move-mouse"></div>
       </div>
     </section>
     <section class="sec sec02" id="about">
       <div class="container">
         <h2 class="sec-tit">I am</h2>
-        <p><span id="im">UI/UX Designer & Web Developer.</span></p>
+        <p><span id="im">a&nbsp;UI/UX&nbsp;Designer&nbsp;&&nbsp;Web&nbsp;Developer.</span></p>
         <div data-aos="fade-right" id="fade-right" class="img-box"><img src="./images/profile-img.png" alt="나의 사진"></div>
         <article data-aos="fade-left" id="fade-left" class="art">
           <h3>Education</h3>
@@ -589,7 +669,7 @@
         <article class="art art02">
           <div class="img-box"><img src="./images/project02.jpg" alt="project02"></div>
           <div class="btn-art02">
-            <button type="button" class="btn01"><a href="https://github.com/songechoi/megabox/" target="_blank">github</a></button>
+            <button type="button" class="btn01"><a href="https://github.com/songechoi/megabox/" target="_blank">web page</a></button>
           </div>
         </article>
       </div>
@@ -629,10 +709,10 @@
     fnSlider(0);  
     sliderHide();
     AOS.init();
-    // fnCircle();
-    // let loopBack = setInterval(function(){
-    //   fnCircle();
-    // },7000)
+    fnCircle();
+    let loopBack = setInterval(function(){
+      fnCircle();
+    },9000)
 
     setAc($('#home .container'));
     $('#btn-nav').click(function(){
@@ -670,7 +750,6 @@
       $(this).css({
         color:'var(--main-color)',
       })
-
       let thisFlag = $(this).attr('data-flag');
       let targetItems = $('#portfolio li');
       tmp(thisFlag,targetItems);
@@ -678,8 +757,7 @@
     $('#btn-close-slider').click(function(){
       sliderHide();
       $(this).hide();
-    })
-    
+    })    
     let elIm = document.querySelector('#im');
     let imTxt = elIm.innerText;
     elIm.innerText='';
@@ -694,10 +772,24 @@
         idx++;
       }else{
         idx = 0;
-        elIm.innerText = '';        
+        elIm.innerText = '';
       }
     },500);
     $('#skills li').append('<div class="over-box"></div>');
+    function fadeRight(p1,p2){
+      $('#fade-right').css({
+        transform:`translateX(${p1}%)`,
+        opacity:`${p2}`,
+        transition:'0.5s',
+      })
+    }      
+    function fadeLeft(p1,p2){
+      $('#fade-left').css({
+        transform:`translateX(${p1}%)`,
+        opacity:`${p2}`,
+        transition:'0.5s',
+      })
+    }
 
     // set Active
     function setAc(el){
