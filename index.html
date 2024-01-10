@@ -333,16 +333,13 @@
 
     #contact .container{
       display: block;
-      position: relative;
       font-family: 'Myriad Pro';
     }
     #contact .phone-email{
-      position: absolute;
-      left: 50%;
-      transform: translateX(-40%);
+      display: flex;
+      justify-content: center;
     }
-    #contact .phone,#contact .email{
-      display: inline-block;
+    #contact .phone{
       margin-right: 70px;
     }
     #contact .phone .img-box,#contact .email .img-box{
@@ -355,6 +352,7 @@
     #contact .author{
       padding-top: 70px;
       text-align: center;
+      font-size: 12px;
     }
     
 
@@ -504,6 +502,9 @@
       }
       #skills li:nth-child(8) .over-box{
         transition-delay:2.4s;
+      }
+      #contact .author{
+        font-size: 16px;
       }
     }
     @media (min-width:914px) {
