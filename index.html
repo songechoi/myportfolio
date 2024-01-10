@@ -62,7 +62,7 @@
     #wrap{
       overflow:hidden;
     }    
-    .sec{      
+    .sec{
       padding:50px 0;
     }
     .sec .container{
@@ -116,7 +116,7 @@
       text-indent:-999999px;
     }
     h1{
-      margin-bottom:60px;
+      margin-bottom:70px;
       font-weight:700;
       font-size:24px;
       text-align:center;
@@ -125,12 +125,12 @@
     .quick-nav{
       display: inline-block;
       padding:0 20px;
-      font-size:20px;
+      font-size:18px;
     }
     .quick-nav svg{
-      width: 20px;
-      height: 21px;
-      margin-right:10px;
+      width: 25px;
+      /* height: 21px; */
+      margin-right:18px;
       padding-top: 3px;
     }
     .header nav li.active svg,
@@ -160,7 +160,6 @@
     .header .row li{
       margin-right: 16px;
     }
-
 
     .aside{
       position:fixed;
@@ -215,14 +214,13 @@
     #home .sec-tit{
       margin-bottom:0;
       color:var(--sub-color03);
-      font-size: 36px;
+      font-size: 40px;
       text-transform: uppercase;
       z-index: 1000;
     }    
     #home .sec-tit::after{
       display:none;
-    }    
-
+    }
     #home .circle01,#home .circle02,#home .circle03{
       position: absolute;
       left:0;
@@ -324,8 +322,7 @@
     #about .art ul li p{
       font-size: 14px;
       color: #333333;
-    }
-    
+    }    
     #about .art ul li p:last-of-type{
       padding-bottom: 19px;
     }
@@ -352,8 +349,7 @@
       padding-top: 70px;
       text-align: center;
       font-size: 12px;
-    }
-    
+    }    
 
     #skills .sec-tit,#skills .sec-tit+p,#skills .art{
       grid-column:1/-1;
@@ -522,9 +518,11 @@
         right:auto;
         width:300px;
       }
+
       .aside{
         display:none;
       }
+
       #home .circle01,#home .circle02,#home .circle03{
         width: 450px;
         height: 450px;
@@ -539,8 +537,7 @@
       }
       #about .art{
         grid-column:5/-1;
-      }
-      
+      }      
       #about .art ul li{
         grid-column:auto;
       }      
@@ -551,6 +548,7 @@
         max-width:1000px;
       }
     }
+
     @keyframes moving {
       0%{
         transform:translateY(0);
@@ -583,7 +581,7 @@
     <header class="header" id="header">
       <div class="container">
         <!-- ::before -->
-        <h1 title="시작페이지로 이동"><a href="./index.html">최 송이</a></h1>
+        <h1 title="시작페이지로 이동"><a href="./index.html">song yee choi</a></h1>
         <nav>
           <ul class="quick-nav">
             <li class="active"><a href="#home"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="21px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve"><path fill="#CCCCCC" d="M0.667,21V7L10,0l9.333,7v14h-7v-8.166H7.667V21H0.667z"/></svg><span>home</span></a></li>
@@ -606,11 +604,9 @@
     <section class="sec sec01" id="home">
       <div class="container">
         <h2 class="sec-tit">portfolio</h2>
-        <!-- <div class="circle-wrapper"> -->
-          <div class="circle01"></div>
-          <div class="circle02"></div>
-          <div class="circle03"></div>
-        <!-- </div> -->
+        <div class="circle01"></div>
+        <div class="circle02"></div>
+        <div class="circle03"></div>
         <div class="move-mouse"></div>
       </div>
     </section>
@@ -716,7 +712,8 @@
           </div>
         </div>
         <div class="author">
-          <p>© 2024 PORTFOLIO OF SONGYEE AMANDA CHOI</p>
+          <P>본 사이트는 상업적 용도가 아닌 개인 포트폴리오 용으로 제작되었습니다.</P>
+          <P>Copyright © 2024 All right reserved by Songyee Amanda Choi.</P>
         </div>
       </div>
     </footer>
@@ -727,7 +724,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-  <script>   
+  <script>
     let clickIndex = 0;
     const arrayImg = $('#portfolio li').clone();
     $('body').prepend('<section class="port-slider"></section>');
