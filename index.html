@@ -451,6 +451,50 @@
       display: none;
     }
 
+    .popup-section{
+      display:none;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      z-index:999999999;
+      background:rgba(0,0,0,0.5); 
+    }
+    .popup-section.active{
+      display:flex;
+    }
+    .popup-wrapper{
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: auto;
+      width:60%;
+      height:80%;
+      max-width:1280px;
+    }
+    .popup-wrapper::-webkit-scrollbar{
+      display: none;
+    }
+    .btn-popup-close{
+      position: absolute;
+      right:0;
+      top:0;
+      width: 100%;
+      border: none;
+      padding: 7px;
+      background: #666;
+      color: #fff;
+      text-align: end;
+    }
+    .popup{
+      display: none;
+    }
+    .popup.active{
+      display: block;
+    }
+
     #contact .img-box{
       width: 15px;
     }
@@ -689,10 +733,10 @@
         <article class="art art01">
           <div class="img-box"><img src="./images/project01.jpg" alt="project01"></div>
           <div class="btn-art01">
-            <button type="button" class="btn01"><a href="https://github.com/songechoi/songechoi.github.io/" target="_blank">결과 보기</a></button>
-            <button type="button" class="btn02">ui design</button>
-            <button type="button" class="btn03">ux design</button>
-            <button type="button" class="btn04">banner designs</button>
+            <button type="button" class="btn01"><a href="https://github.com/songechoi/CoffeeHouse" target="_blank">결과 보기</a></button>
+            <button type="button" class="btn02" id="btn02">ui design</button>
+            <button type="button" class="btn03" id="btn03">ux design</button>
+            <button type="button" class="btn04" id="btn04">banner designs</button>
           </div>
         </article>
         <article class="art art02">
@@ -715,6 +759,20 @@
         </article>
       </div>
     </section>
+    <section class="sec popup-section" id="popup-section">
+      <div class="popup-wrapper" id="popup-wrapper">
+        <button class="btn-popup-close" id="btn-popup-close">닫기 X</button>
+        <div class="popup popup01" id="popup01">
+          <div class="img-box"><img src="./images/ui-design.jpg" alt="ui-design"></div>
+        </div>
+        <div class="popup popup02" id="popup02">
+          <div class="img-box"><img src="./images/ux-design.jpg" alt="ux-design"></div>
+        </div>
+        <div class="popup popup03" id="popup03">
+          <div class="img-box"><img src="" alt=""></div>
+        </div>
+      </div>
+    </section>
     <footer class="sec sec05" id="contact">
       <div class="container">
         <h2 class="sec-tit">contact</h2>
@@ -729,7 +787,7 @@
           </div>
         </div>
         <div class="author">
-          <P style="padding-bottom: 5px;">본 사이트는 상업적 용도가 아닌 개인 포트폴리오 용으로 제작되었습니다.</P>
+          <P style="padding-bottom: 5px;">본 사이트는 상업적 용도가 아닌 개인 포트폴리오용으로 제작되었습니다.</P>
           <P>Copyright © 2024 All right reserved by Songyee Amanda Choi.</P>
         </div>
       </div>
@@ -746,8 +804,7 @@
     const arrayImg = $('#portfolio li').clone();
     $('body').prepend('<section class="port-slider"></section>');
     $('.port-slider').prepend('<section class="slider"></section>');
-    $('.slider').prepend(arrayImg);
-    
+    $('.slider').prepend(arrayImg);    
     fnSlider(0);  
     sliderHide();
     AOS.init();
@@ -755,7 +812,6 @@
     let loopBack = setInterval(function(){
       fnCircle();
     },9000)
-
     setAc($('#home .container'));
     $('#btn-nav').click(function(){
       tglAc($('#header'));
@@ -796,6 +852,32 @@
       let targetItems = $('#portfolio li');
       tmp(thisFlag,targetItems);
     })
+    // 작업중
+    $('#btn02').click(function(){
+      setAc($('#popup-section'));
+      resAc($('.popup'));
+      setAc($('#popup01'));
+      if($('#popup-section').hasClass('active')){
+        nonScr($('body'));
+      }else{
+        scr($('body'));
+      }
+    })
+    $('#btn03').click(function(){
+      setAc($('#popup-section'));
+      resAc($('.popup'));
+      setAc($('#popup02'));
+      if($('#popup-section').hasClass('active')){
+        nonScr($('body'));
+      }else{
+        scr($('body'));
+      }
+    })
+    $('#btn-popup-close').click(function(){
+      resAc($('#popup-section'));
+      resAc($('#popup'));
+      scr($('body'));
+    })
     $('#btn-close-slider').click(function(){
       sliderHide();
       $(this).hide();
@@ -832,7 +914,6 @@
         transition:'0.5s',
       })
     }
-
     // set Active
     function setAc(el){
       el.addClass('active');
@@ -923,7 +1004,6 @@
         startSlide:2,
       });
     }
-
     function fnCircle(){
       let leftValue01 = Math.random() * 100 - 10;
       let topValue01 = Math.random() * 100 - 10;
